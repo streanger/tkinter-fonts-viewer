@@ -14,7 +14,7 @@ files = [os.path.join('fonts', item) for item in os.listdir('tkinter_fonts_viewe
 
 setuptools.setup(
     name='tkinter_fonts_viewer',
-    version='0.1.0',
+    version='0.1.1',
     keywords="tkinter fonts font viewer",
     author="streanger",
     author_email="divisionexe@gmail.com",

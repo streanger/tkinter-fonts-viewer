@@ -1,5 +1,5 @@
 """tkinter_fonts_viewer
-version: 0.1.0
+version: 0.1.1
 date: 31.05.2020
 author: streanger
 """
@@ -470,10 +470,10 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         """
         code = event.keycode
 
-        if code == 38:
+        if code in (38, 111):
             self.index_up()
 
-        elif code == 40:
+        elif code in (40, 116):
             self.index_down()
 
     def create_widgets(self):

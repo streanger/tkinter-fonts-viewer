@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: tkinter-fonts-viewer
-Version: 0.1.0
+Version: 0.1.1
 Summary: gui viewer for tkinter fonts
 Home-page: https://github.com/streanger/tkinter_fonts_viewer
 Author: streanger
@@ -43,7 +43,8 @@ Description: tkinter_fonts_viewer
         Usage from command line
         ===========
         
-        ::
+        .. code-block::
+        
             fonts_viewer
         
         
