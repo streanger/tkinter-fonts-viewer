@@ -45,3 +45,10 @@ Example application views
 .. image:: example_view1.png
 
 .. image:: example_view2.png
+
+Todo
+===========
+01.06.2020, todo:
+
+    - add entry for main text (for now it is font name)
+    
