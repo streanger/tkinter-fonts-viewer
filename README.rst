@@ -35,7 +35,8 @@ Usage from python
 Usage from command line
 ===========
 
-::
+.. code-block::
+
     fonts_viewer
 
 
