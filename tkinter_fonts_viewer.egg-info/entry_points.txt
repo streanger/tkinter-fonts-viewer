@@ -1,0 +1,3 @@
+[console_scripts]
+fonts_viewer = tkinter_fonts_viewer:viewer
+

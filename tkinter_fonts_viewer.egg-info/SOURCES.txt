@@ -1,0 +1,13 @@
+LICENSE.txt
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+tkinter_fonts_viewer/__init__.py
+tkinter_fonts_viewer/tkinter_fonts_viewer.py
+tkinter_fonts_viewer.egg-info/PKG-INFO
+tkinter_fonts_viewer.egg-info/SOURCES.txt
+tkinter_fonts_viewer.egg-info/dependency_links.txt
+tkinter_fonts_viewer.egg-info/entry_points.txt
+tkinter_fonts_viewer.egg-info/top_level.txt
+tkinter_fonts_viewer/fonts/fonts_status.json
