@@ -66,7 +66,7 @@ def fonts_type():
 
 def viewer():
     """main application gui"""
-    app = TkinterFontsViewer(master=Tk(), resizable=True, hide_console=False)
+    app = TkinterFontsViewer(master=Tk(), resizable=True, hide_console=True)
     app.mainloop()
 
 
@@ -171,6 +171,7 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
                 "\n".join(["❄", "❄❄❄", "☃☃☃☃☃", "❄❄❄", "❄"]),
                 r"¯\_( ͡❛ ͜ʖ ͡❛)_/¯",
                 "",
+                "tkinter fonts viewer",
             ]
         )
 
@@ -406,7 +407,6 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
         self.main_text_entry.delete(0, END)
         self.user_text = next(self.test_examples)
         self.main_text_entry.insert(0, self.user_text)
-
         self.perform_center_text(self.user_text)
 
     def create_widgets(self):
