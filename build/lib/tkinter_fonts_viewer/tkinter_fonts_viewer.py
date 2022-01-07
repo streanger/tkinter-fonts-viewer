@@ -66,7 +66,7 @@ def fonts_type():
 
 def viewer():
     """main application gui"""
-    app = TkinterFontsViewer(master=Tk(), resizable=True, hide_console=False)
+    app = TkinterFontsViewer(master=Tk(), resizable=True, hide_console=True)
     app.mainloop()
 
 
