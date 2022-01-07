@@ -167,6 +167,7 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
             "If you haven't found something strange during the day, it hasn't been much of a day",
             '\n'.join(['❄', '❄❄❄', '☃☃☃☃☃', '❄❄❄', '❄']),
             '¯\_( ͡❛ ͜ʖ ͡❛)_/¯',
+            '',
         ])
         
         # *********** FONTS MONO STATUS ***********
