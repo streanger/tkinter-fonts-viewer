@@ -6,6 +6,7 @@ author: streanger
 import os
 import time
 import json
+import string
 import ctypes
 from threading import Thread
 from tkinter import (
@@ -35,6 +36,7 @@ from tkinter import (
 )
 import pkg_resources
 from tkinter.messagebox import showinfo
+from itertools import cycle
 
 
 
@@ -158,7 +160,15 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
             family=app_font, size=12, weight="normal"
         )
         self.user_text = ''
-        
+        self.test_examples = cycle([
+            '\n'.join([string.digits, string.ascii_lowercase, string.ascii_uppercase, string.punctuation]),
+            'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\nUt enim ad minim veniam...',
+            '\n'.join(['❄', '❄❄❄', '☃☃☃☃☃', '❄❄❄', '❄']),
+            '"I know I can do it, Todd Downey said,\nhelping himself to another ear of corn\nfrom the steaming bowl.\nI’m sure that in time,\nevery bit of her will be gone,\nand her death will be a mystery.\nEven to me."',
+            "If you haven't found\nsomething strange during the day,\nit hasn't been much of a day",
+            'next stuff',
+            'last item',
+        ])
         
         # *********** FONTS MONO STATUS ***********
         self.FONTS_MODE = 0
@@ -418,6 +428,18 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         return None
         
         
+    def switch_example_text(self):
+        print('[*] example text')
+        self.main_text_entry.delete(0, END)
+        self.user_text = next(self.test_examples)
+        self.main_text_entry.insert(0, self.user_text)
+        
+        center_text = self.perform_center_text(self.user_text)
+        main_font = font.Font(family=self.current_font, size=50, weight="normal")
+        self.main_label.config(font=main_font, text=center_text)
+        return None
+        
+        
     def create_widgets(self):
         """create widgets from dict object"""
 
@@ -453,7 +475,17 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         self.wrap_text_checkbox.pack(expand=YES, fill=BOTH, side=LEFT)
         
         
-        # number of fonts
+        # ********* example button *********
+        self.example_button = Button(
+            self.top_info,
+            font=self.MONO_FONT_INFO_UPPER,
+            text='example',
+            command=self.switch_example_text,
+        )
+        self.example_button.pack(expand=YES, fill=BOTH, side=LEFT)
+        
+        
+        # ********* number of fonts *********
         self.top_info_left = Frame(self.top_info, relief=self.RELIEF_TYPE)
         self.top_info_left.pack(expand=YES, fill=BOTH, side=LEFT)
         self.top_info_left_up = Label(
@@ -471,10 +503,10 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         )
         self.top_info_left_down.pack(expand=YES, fill=X, side=BOTTOM)
 
-        # index entry
+
+        # ********* text entry *********
         entries_size = 13
         top_center_val = 15
-
         self.top_info_center_left = Frame(self.top_info, relief=self.RELIEF_TYPE)
         self.top_info_center_left.pack(expand=YES, fill=BOTH, side=LEFT)
         self.top_info_center_left_up = Label(
@@ -495,7 +527,8 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         self.main_text_entry.bind("<Return>", self.entry_callback)
         self.main_text_entry.pack(expand=YES, fill=X, side=BOTTOM)
 
-        # filter entry
+
+        # ********* search entry *********
         self.top_filter_frame = Frame(self.top_info, relief=self.RELIEF_TYPE)
         self.top_filter_frame.pack(expand=YES, fill=BOTH, side=LEFT)
 
@@ -517,7 +550,8 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         self.filter_entry.bind("<Return>", self.filter_callback)
         self.filter_entry.pack(expand=YES, fill=X, side=BOTTOM)
 
-        # mono-normal switch button
+
+        # ********* mono-normal switch button *********
         button_text = "{}\n{}".format(
             " mode ", self.FONTS_MODES_DICT[self.FONTS_MODE].lower()
         )
@@ -531,16 +565,19 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         )
         self.mode_button.pack(expand=YES, fill=X, side=TOP)
 
+
         # ********* MAIN LABEL CONTENT *********
-        third_font = self.FONTS_FILTERED[self.INDEX]
-        start_text = self.perform_center_text(third_font)
-        main_font = font.Font(family=third_font, size=50, weight="normal")
+        starting_font = self.FONTS_FILTERED[self.INDEX]
+        start_text = self.perform_center_text(starting_font)
+        main_font = font.Font(family=starting_font, size=50, weight="normal")      # think of chaning font weight
         self.main_label = Label(
             # self.right_frame, relief=self.RELIEF_TYPE, font=main_font, text=start_text, wraplength=400,       # think of dynamic wraplength
             self.right_frame, relief=self.RELIEF_TYPE, font=main_font, text=start_text,
         )
         self.main_label.pack(expand=YES, fill=BOTH, side=BOTTOM)
 
+        # dynamically wrap text in label
+        self.main_label.bind('<Configure>', lambda x: self.main_label.config(wraplength=self.main_label.winfo_width()))
         return True
 
 
