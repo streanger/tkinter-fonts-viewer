@@ -162,12 +162,11 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         self.user_text = ''
         self.test_examples = cycle([
             '\n'.join([string.digits, string.ascii_lowercase, string.ascii_uppercase, string.punctuation]),
-            'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\nUt enim ad minim veniam...',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...',
+            'I know I can do it, Todd Downey said, helping himself to another ear of corn from the steaming bowl. I’m sure that in time, every bit of her will be gone, and her death will be a mystery. Even to me.',
+            "If you haven't found something strange during the day, it hasn't been much of a day",
             '\n'.join(['❄', '❄❄❄', '☃☃☃☃☃', '❄❄❄', '❄']),
-            '"I know I can do it, Todd Downey said,\nhelping himself to another ear of corn\nfrom the steaming bowl.\nI’m sure that in time,\nevery bit of her will be gone,\nand her death will be a mystery.\nEven to me."',
-            "If you haven't found\nsomething strange during the day,\nit hasn't been much of a day",
-            'next stuff',
-            'last item',
+            '¯\_( ͡❛ ͜ʖ ͡❛)_/¯',
         ])
         
         # *********** FONTS MONO STATUS ***********
@@ -295,9 +294,12 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         
     def perform_center_text(self, text):
         """perform text(font name), to fit main label"""
-        wrap_status = self.wrap_text_var.get()
-        if not wrap_status:
-            return text
+        # no wrap for not; dynamic in main label
+        return text
+        
+        # wrap_status = self.wrap_text_var.get()
+        # if not wrap_status:
+            # return text
         if len(text.split()) > 2:
             text = "\n".join(text.split())
         elif len(text.split()) == 2 and len(text) > 14:
@@ -470,9 +472,36 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
 
 
         # ********* checkboxes *********
-        self.wrap_text_var = IntVar(value=1)
-        self.wrap_text_checkbox = Checkbutton(self.top_info, text='wrap text', font=self.MONO_FONT_INFO_UPPER, variable=self.wrap_text_var)
-        self.wrap_text_checkbox.pack(expand=YES, fill=BOTH, side=LEFT)
+        # self.checkboxes_frame = Frame(self.top_info)
+        # self.checkboxes_frame.pack(expand=YES, fill=BOTH, side=LEFT)
+        
+        
+        # self.wrap_text_var = IntVar(value=1)
+        # self.wrap_text_checkbox = Checkbutton(self.checkboxes_frame, text='wrap text', font=self.MONO_FONT_INFO_UPPER, variable=self.wrap_text_var)
+        # self.wrap_text_checkbox.pack(expand=YES, fill=BOTH, side=TOP)
+        
+        # self.bold_font_var = IntVar(value=1)
+        # self.bold_font_checkbox = Checkbutton(self.checkboxes_frame, text='bold', font=self.MONO_FONT_INFO_UPPER, variable=self.bold_font_var)
+        # self.bold_font_checkbox.pack(expand=YES, fill=BOTH, side=TOP)
+        
+        # self.curved_font_var = IntVar(value=1)
+        # self.curved_font_checkbox = Checkbutton(self.checkboxes_frame, text='curved', font=self.MONO_FONT_INFO_UPPER, variable=self.curved_font_var)
+        # self.curved_font_checkbox.pack(expand=YES, fill=BOTH, side=TOP)
+        
+        
+        # ********* mono-normal switch button *********
+        button_text = "{}\n{}".format(
+            " mode ", self.FONTS_MODES_DICT[self.FONTS_MODE].lower()
+        )
+        self.top_button_frame = Frame(self.top_info, relief=self.RELIEF_TYPE)
+        self.top_button_frame.pack(expand=YES, fill=BOTH, side=LEFT)
+        self.mode_button = Button(
+            self.top_button_frame,
+            font=self.MONO_FONT_INFO_UPPER,
+            text=button_text,
+            command=self.switch_font_mode,
+        )
+        self.mode_button.pack(expand=YES, fill=X, side=TOP)
         
         
         # ********* example button *********
@@ -551,19 +580,7 @@ class TkinterFontsViewer(Frame): # pylint: disable=too-many-ancestors
         self.filter_entry.pack(expand=YES, fill=X, side=BOTTOM)
 
 
-        # ********* mono-normal switch button *********
-        button_text = "{}\n{}".format(
-            " mode ", self.FONTS_MODES_DICT[self.FONTS_MODE].lower()
-        )
-        self.top_button_frame = Frame(self.top_info, relief=self.RELIEF_TYPE)
-        self.top_button_frame.pack(expand=YES, fill=BOTH, side=LEFT)
-        self.mode_button = Button(
-            self.top_button_frame,
-            font=self.MONO_FONT_INFO_UPPER,
-            text=button_text,
-            command=self.switch_font_mode,
-        )
-        self.mode_button.pack(expand=YES, fill=X, side=TOP)
+
 
 
         # ********* MAIN LABEL CONTENT *********
