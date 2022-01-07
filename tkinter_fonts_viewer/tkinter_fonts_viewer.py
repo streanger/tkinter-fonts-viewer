@@ -1,7 +1,11 @@
 """tkinter_fonts_viewer
-version: 0.1.1
-date: 31.05.2020
-author: streanger
+version, date, author: 0.1.1, 31.05.2020, streanger
+version, date, author: 0.1.2, 07.01.2022, streanger
+
+useful:
+https://stackoverflow.com/questions/5286093/display-listbox-with-columns-using-tkinter
+https://fsymbols.com/emoticons/
+https://stackoverflow.com/questions/70538010/distributing-python-programs-with-a-tkinter-gui-using-pysintaller
 """
 import os
 import time
@@ -62,7 +66,7 @@ def fonts_type():
 
 def viewer():
     """main application gui"""
-    app = TkinterFontsViewer(master=Tk())
+    app = TkinterFontsViewer(master=Tk(), resizable=True, hide_console=False)
     app.mainloop()
 
 
@@ -133,7 +137,6 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
         super().__init__(master)
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.master.geometry("{}x{}+333+50".format(800, 500))
-        # self.master.geometry("{}x{}+333+50".format(1000, 500))
         if resizable:
             self.master.resizable(width=True, height=True)
         else:
@@ -294,10 +297,10 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
 
     def perform_center_text(self, text):
         """perform text(font name), to fit main label"""
-        # no wrap for not; dynamic in main label
-        # for now empty
-        # move here all stuff to print main text
-        return text
+        # make some text manipulations if needed
+        # no wrap for now; dynamic in main label
+        main_font = font.Font(family=self.current_font, size=50, weight="normal")
+        self.main_label.config(font=main_font, text=text)
 
     def entry_callback(self, event):
         """entries callback"""
@@ -308,10 +311,8 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
             main_text = self.user_text
         else:
             main_text = self.current_font
-        center_text = self.perform_center_text(main_text)
-        main_font = font.Font(family=self.current_font, size=50, weight="normal")
-        self.main_label.config(font=main_font, text=center_text)
 
+        self.perform_center_text(main_text)
         # set focus on other item
         self.left_listbox.focus()
 
@@ -377,16 +378,15 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
             return None
         selected_item = self.left_listbox.get(selected_index)
         self.current_font = selected_item
-        print("[*] {}: {}".format(selected_index, selected_item))
+        # print("[*] {}: {}".format(selected_index, selected_item))
 
         # ********* update main label *********
         if self.user_text:
             main_text = self.user_text
         else:
             main_text = selected_item
-        center_text = self.perform_center_text(main_text)
-        main_font = font.Font(family=self.current_font, size=50, weight="normal")
-        self.main_label.config(font=main_font, text=center_text)
+
+        self.perform_center_text(main_text)
         return None
 
     def clear_listbox(self):
@@ -403,17 +403,14 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
 
     def switch_example_text(self):
         """switch example text to show on main label"""
-        print("[*] example text")
         self.main_text_entry.delete(0, END)
         self.user_text = next(self.test_examples)
         self.main_text_entry.insert(0, self.user_text)
-        center_text = self.perform_center_text(self.user_text)
-        main_font = font.Font(family=self.current_font, size=50, weight="normal")
-        self.main_label.config(font=main_font, text=center_text)
+
+        self.perform_center_text(self.user_text)
 
     def create_widgets(self):
         """create widgets from dict object"""
-
         # ********* bind key event for master widget *********
         self.main_frame = Frame(self.master)
         self.main_frame.pack(expand=YES, fill=BOTH, side=BOTTOM)
@@ -427,7 +424,6 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
         self.left_listbox.config(yscrollcommand=self.left_scrollbar.set, width=0)
         self.left_scrollbar.config(command=self.left_listbox.yview)
         self.left_listbox.bind("<<ListboxSelect>>", self.items_selected)
-        self.left_listbox.focus()
 
         # ********* RIGHT FRAME *********
         self.right_frame = Frame(self.main_frame)
@@ -522,12 +518,9 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
 
         # ********* MAIN LABEL CONTENT *********
         starting_font = self.FONTS_FILTERED[0]
-        start_text = self.perform_center_text(starting_font)
-        main_font = font.Font(
-            family=starting_font, size=50, weight="normal"
-        )
+        main_font = font.Font(family=starting_font, size=50, weight="normal")
         self.main_label = Label(
-            self.right_frame, relief=self.RELIEF_TYPE, font=main_font, text=start_text,
+            self.right_frame, relief=self.RELIEF_TYPE, font=main_font, text=starting_font,
         )
         self.main_label.pack(expand=YES, fill=BOTH, side=BOTTOM)
         # dynamically wrap text in label
@@ -540,20 +533,3 @@ class TkinterFontsViewer(Frame):  # pylint: disable=too-many-ancestors
 
 if __name__ == "__main__":
     viewer()
-
-
-"""
-https://stackoverflow.com/questions/5286093/display-listbox-with-columns-using-tkinter
-https://fsymbols.com/emoticons/
-
-build font into exe
-https://stackoverflow.com/questions/70538010/distributing-python-programs-with-a-tkinter-gui-using-pysintaller
-
-
-todo:
-    -resizable font size
-    -checkbutton for bold and curve font 
-    -color picker (consider)
-    -
-    
-"""
