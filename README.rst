@@ -52,38 +52,38 @@ Update/Todo
 07.01.2022
 **********************
 
- - resizable window
+- resizable window
 
- - listbox widget to choose fonts
+- listbox widget to choose fonts
 
- - "text" entry for user input text
+- "text" entry for user input text
 
- - "example" button with example text
+- "example" button with example text
 
- - auto wrapping text in main label
+- auto wrapping text in main label
 
 01.06.2020
 **********************
 
- - main view
+- main view
  
- - search entry
+- search entry
  
- - fonts type (normal/mono) json
+- fonts type (normal/mono) json
  
- - oldstyle listbox
+- oldstyle listbox
 
 todo/to consider
 **********************
 
- - checkbutton for bold/curve fonts
+- checkbutton for bold/curve fonts
 
- - option for font resizing
+- option for font resizing
 
- - color picker
+- color picker
 
- - night mode
+- night mode
 
- - redesign of top menu
+- redesign of top menu
 
- - enumeration of fonts in listbox
+- enumeration of fonts in listbox
