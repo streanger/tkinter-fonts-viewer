@@ -21,7 +21,7 @@ setuptools.setup(
     description="gui viewer for tkinter fonts",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/streanger/tkinter_fonts_viewer",
+    url="https://github.com/streanger/tkinter-fonts-viewer",
     packages=['tkinter_fonts_viewer',],
     python_requires=">=3.5",
     license='MIT',
